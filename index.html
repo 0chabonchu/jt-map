@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>J&T Express Cabang Yogyakarta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body { margin: 0; font-family: sans-serif; }
+    #map { height: 100vh; transition: all 0.5s ease; }
+    .popup-img { width: 100%; border-radius: 8px; margin-bottom: 10px; }
+    .popup-box { width: 250px; font-size: 14px; line-height: 1.4; }
+    .popup-title { font-weight: bold; font-size: 16px; margin-bottom: 8px; }
+    .popup-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+    .popup-info i {
+      color: #d33;
+      width: 18px;
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="map" class="fade-in"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([-7.8888, 110.3333], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const cabangData = [
+      {
+        name: "J&T Express Bantul Kota",
+        lat: -7.8875,
+        lng: 110.3285,
+        img: "https://via.placeholder.com/300x200?text=Cabang+Bantul",
+        manager: "Andi Setiawan",
+        spv: "Rina Wulandari",
+        koordinator: "Teguh Prasetyo",
+        jam: "08.00 - 20.00",
+        telp: "(0274) 123456"
+      },
+      {
+        name: "J&T Express Imogiri",
+        lat: -7.9453,
+        lng: 110.3792,
+        img: "https://via.placeholder.com/300x200?text=Cabang+Imogiri",
+        manager: "Dian Wahyudi",
+        spv: "Sari Utami",
+        koordinator: "Bambang Hadi",
+        jam: "08.00 - 19.00",
+        telp: "(0274) 654321"
+      },
+      {
+        name: "J&T Express Kasihan",
+        lat: -7.8379,
+        lng: 110.3218,
+        img: "https://via.placeholder.com/300x200?text=Cabang+Kasihan",
+        manager: "Rudi Hartono",
+        spv: "Lilis Komalasari",
+        koordinator: "Agus Riyanto",
+        jam: "08.00 - 20.30",
+        telp: "(0274) 789012"
+      }
+    ];
+
+    cabangData.forEach(cabang => {
+      const popupContent = `
+        <div class='popup-box'>
+          <div class='popup-title'>${cabang.name}</div>
+          <img class='popup-img' src='${cabang.img}' alt='${cabang.name}'>
+          <div class='popup-info'><i class="fas fa-user-tie"></i> <span><b>Regional Manager:</b> ${cabang.manager}</span></div>
+          <div class='popup-info'><i class="fas fa-users"></i> <span><b>SPV:</b> ${cabang.spv}</span></div>
+          <div class='popup-info'><i class="fas fa-user-cog"></i> <span><b>Koordinator:</b> ${cabang.koordinator}</span></div>
+          <div class='popup-info'><i class="fas fa-clock"></i> <span><b>Jam Buka:</b> ${cabang.jam}</span></div>
+          <div class='popup-info'><i class="fas fa-phone"></i> <span><b>Call Center:</b> ${cabang.telp}</span></div>
+        </div>`;
+
+      L.marker([cabang.lat, cabang.lng]).addTo(map)
+        .bindPopup(popupContent);
+    });
+  </script>
+</body>
+</html>
